@@ -110,6 +110,7 @@
 	  tree
 	  lsd
 	  home-manager
+    lazygit
 	  ];
 
   system.stateVersion = "25.05";
