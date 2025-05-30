@@ -34,8 +34,5 @@ in {
     vim-nix
   ];
 
-  extraLuaConfig = ''
-    ${builtins.readFile ../.././nvim/options.lua}
-  '';
 }
 
