@@ -27,6 +27,7 @@ in {
   programs.neovim = programs.neovim;
   wayland.windowManager.hyprland = programs.hyprland;
   programs.starship = programs.starship;
+  programs.zoxide.enable = true;
 
   programs.home-manager.enable = true;
 
