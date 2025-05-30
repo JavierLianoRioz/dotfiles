@@ -9,5 +9,8 @@
     co = "checkout";
     cm = "commit";
   };
+  extraConfig = {
+      init.defaultBranch = "dev";
+    };
 }
 
