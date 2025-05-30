@@ -28,6 +28,7 @@
 	     package = config.boot.kernelPackages.nvidiaPackages.beta;
      };
 
+
      
   programs.hyprland.enable = true;
 
