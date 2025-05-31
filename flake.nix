@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, stylix, ... }@inputs:
+  outputs = { self, nixpkgs, stylix, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -23,11 +23,9 @@
       };
     };
   in {
-
     nixosConfigurations = {
       tower = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs system; };
-
         modules = [ 
           stylix.nixosModules.stylix
           ./configuration.nix
@@ -35,5 +33,14 @@
       };
     };
 
+    homeConfigurations = {
+      midas = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [
+          ./home.nix
+        ];
+        extraSpecialArgs = { inherit inputs; };
+      };
+    };
   };
 }

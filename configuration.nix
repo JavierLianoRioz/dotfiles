@@ -108,6 +108,7 @@
 	  kitty
 	  bat
 	  tree
+    zig
 	  lsd
 	  home-manager
     lazygit

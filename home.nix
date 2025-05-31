@@ -1,17 +1,33 @@
 { config, pkgs, ... }:
 
-let
-  programs = import ./home/programs.nix { inherit config pkgs; };
-in {
+{
   home.username = "midas";
   home.homeDirectory = "/home/midas";
   home.stateVersion = "23.11"; # DON'T ERRASE
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-    TERMINAL = "kitty";
-    SHELL = "zsh";
-  };
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      TERMINAL = "kitty";
+      SHELL = "zsh";
+    };
+
+  imports = [
+    ./modules/kitty.nix
+    ./modules/zsh.nix
+    ./modules/git.nix
+    ./modules/fzf.nix
+    ./modules/neovim/neovim.nix
+    ./modules/starship.nix
+    ./modules/window_managers/hyprland.nix
+  ];
+
+  kitty.enable = true;
+  zsh.enable = true;
+  git.enable = true;
+  fzf.enable = true;
+  #neovim.enable = true;
+  starship.enable = true;
+  hyprland.enable = true;
 
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
@@ -19,14 +35,7 @@ in {
 
   home.file = {};
 
-  # Programas
-  programs.kitty = programs.kitty;
-  programs.zsh = programs.zsh;
-  programs.git = programs.git;
-  programs.fzf = programs.fzf;
-  programs.neovim = programs.neovim;
-  wayland.windowManager.hyprland = programs.hyprland;
-  programs.starship = programs.starship;
+# Programas
   programs.zoxide.enable = true;
 
   programs.home-manager.enable = true;
