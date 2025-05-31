@@ -3,14 +3,15 @@
 
 {
   options = {
-    nvim.enable = lib.mkEnableOption "Enable nvim";
+    neovim.enable = lib.mkEnableOption "Enable neovim";
   };
 
-  config = lib.mkIf config.nvim.enable (
+  config = lib.mkIf config.neovim.enable (
     let
       nvimConfigPath = ./nvim;
     in
     {
+      programs.neovim.enable = true;
       home.file.".config/nvim".source = nvimConfigPath;
     }
   );

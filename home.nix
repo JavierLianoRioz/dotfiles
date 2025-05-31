@@ -25,7 +25,7 @@
   zsh.enable = true;
   git.enable = true;
   fzf.enable = true;
-  #neovim.enable = true;
+  neovim.enable = true;
   starship.enable = true;
   hyprland.enable = true;
 
