@@ -18,17 +18,15 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      config = {
-        allowUnfree = true;
-      };
+      config.allowUnfree = true;
     };
   in {
     nixosConfigurations = {
-      tower = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs system; };
+      midas = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs system self; };
         modules = [ 
           stylix.nixosModules.stylix
-          ./configuration.nix
+          ./hosts/midas/configuration.nix
         ];
       };
     };
@@ -37,7 +35,7 @@
       midas = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./home.nix
+          ./hosts/midas/home.nix
         ];
         extraSpecialArgs = { inherit inputs; };
       };

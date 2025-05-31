@@ -1,24 +1,26 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }@args:
 
-{
+let
+  inherit (args) self;
+in {
   home.username = "midas";
   home.homeDirectory = "/home/midas";
   home.stateVersion = "23.11"; # DON'T ERRASE
 
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      TERMINAL = "kitty";
-      SHELL = "zsh";
-    };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    TERMINAL = "kitty";
+    SHELL = "zsh";
+  };
 
   imports = [
-    ./modules/kitty.nix
-    ./modules/zsh.nix
-    ./modules/git.nix
-    ./modules/fzf.nix
-    ./modules/neovim/neovim.nix
-    ./modules/starship.nix
-    ./modules/window_managers/hyprland.nix
+    "${self}/modules/kitty.nix"
+    "${self}/modules/zsh.nix"
+    "${self}/modules/git.nix"
+    "${self}/modules/fzf.nix"
+    "${self}/modules/neovim/neovim.nix"
+    "${self}/modules/starship.nix"
+    "${self}/modules/window_managers/hyprland.nix"
   ];
 
   kitty.enable = true;
