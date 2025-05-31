@@ -16,6 +16,7 @@
         updateHome = "home-manager switch -f /home/midas/.dotfiles/home.nix";
         ls = "lsd";
         cd = "z";
+        tree = "ls --tree";
       };
 
       initContent = ''
