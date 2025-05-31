@@ -13,6 +13,7 @@
     {
       programs.neovim.enable = true;
       home.file.".config/nvim".source = nvimConfigPath;
+      home.packages = [pkgs.wl-clipboard];
     }
   );
 }
