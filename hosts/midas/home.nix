@@ -1,3 +1,17 @@
+{ config, pkgs, ... }:
+
+{
+  home.username = "midas";
+  home.homeDirectory = "/home/midas";
+
+  home.stateVersion = "25.05"; # Don't errase
+
+  home.packages = [
+  ];
+
+  home.file = {
+  };
+
   wayland.windowManager.hyprland = {
       enable = true;
       settings = {
@@ -30,3 +44,10 @@
 
       };
     };
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
+
+  programs.home-manager.enable = true;
+}
