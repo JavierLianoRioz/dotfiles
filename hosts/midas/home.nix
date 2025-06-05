@@ -6,8 +6,6 @@
 
   home.stateVersion = "25.05"; # Don't errase
 
-  hyprland.enable = true;
-
   home.packages = [
   ];
 
@@ -16,6 +14,8 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
+    SHELL = "zsh";
+    TERMINAL = "kitty";
   };
 
   programs.home-manager.enable = true;
