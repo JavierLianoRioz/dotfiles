@@ -38,18 +38,8 @@
     # Añade los alias a la configuración de Zsh.
     programs.zsh.enable = true;
     programs.zsh.shellAliases = {
-      # Mi recomendación para un 'ls' moderno:
-      # -l: formato largo
-      # --icons=auto: iconos automáticos
-      # --header: cabecera para las columnas
-      # --git: estado de git para cada archivo
-      l = "eza -l --icons=auto --header --git";
-
-      # Vista de árbol con iconos
+      l = "eza -l --icons=auto --git --no-permissions --no-user --no-filesize --no-time";
       t = "eza --tree --icons=auto";
-      
-      # Si prefieres una vista de grid (cuadrícula) como el 'ls' clásico:
-      lg = "eza --grid --icons=auto --header";
     };
   };
 }
