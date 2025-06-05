@@ -1,50 +1,29 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, lib, modulesPath, self, ... }:
+{ config, pkgs, ... }:
 
 {
-  imports = [
-# Incluye el módulo de home-manager de tus inputs
-    inputs.home-manager.nixosModules.home-manager
+  imports =
+    [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-  ];
+    ];
 
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs self; };
-    users.midas = import ./home.nix;
-  };
-
-  fonts.packages = with pkgs; [ fira-code ];
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-# NVidia
-  hardware.graphics.enable = true;
-  hardware.nvidia = {
-    open = true;
-    modesetting.enable = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
-  };
-
-
-
-  programs.hyprland.enable = true;
-
-# Bootloader.
+  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "tower";
+  networking.hostName = "tower"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-# Enable networking
+  # Enable networking
   networking.networkmanager.enable = true;
 
-# Set your time zone.
+  # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
-# Select internationalisation properties.
+  # Select internationalisation properties.
   i18n.defaultLocale = "es_ES.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -58,26 +37,29 @@
     LC_TELEPHONE = "es_ES.UTF-8";
     LC_TIME = "es_ES.UTF-8";
   };
+  
+  # Enable hyprland
+  programs.hyprland.enable = true;
 
-# Enable the X11 windowing system.
+  # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-# Enable the GNOME Desktop Environment.
+  # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-# Configure keymap
+  # Configure keymap
   services.xserver.xkb = {
     layout = "es";
     variant = "";
   };
-
+  
   console.keyMap = "es";
 
-# Enable CUPS to print documents.
+  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-# Enable sound with pipewire.
+  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -87,32 +69,29 @@
     pulse.enable = true;
   };
 
-# Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.midas = {
     isNormalUser = true;
     description = "midas";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-#  thunderbird
+    #  thunderbird
     ];
   };
 
-# Install firefox.
+  # Install firefox.
   programs.firefox.enable = true;
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
-# List packages installed in system profile. To search, run:
-# $ nix search wget
   environment.systemPackages = with pkgs; [
-    home-manager
-      bat
-      tree
-      zig
-      lsd
-      home-manager
-      lazygit
+	  neovim
+	  kitty
   ];
+  
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.05"; # DON'T CHANGE
 
 }
