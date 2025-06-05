@@ -6,11 +6,9 @@
 
   home.stateVersion = "25.05"; # Don't errase
 
-  home.packages = [
-  ];
+  home.packages = [ ];
 
-  home.file = {
-  };
+  home.file = { };
 
   home.sessionVariables = {
     EDITOR = "nvim";
