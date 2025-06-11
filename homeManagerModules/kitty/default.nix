@@ -18,7 +18,7 @@
       # --- CAMBIO AÑADIDO ---
       # Elige tu sabor de Catppuccin preferido.
       # Opciones: "Catppuccin-Latte", "Catppuccin-Frappe", "Catppuccin-Macchiato", "Catppuccin-Mocha"
-      theme = "Catppuccin-Mocha";
+      themeFile = "Catppuccin-Mocha";
 
       font = {
         name = "Fira Code Nerd Font";
@@ -56,7 +56,7 @@
         l = "eza -l --icons=auto --git --no-permissions --no-user --no-filesize --no-time";
         t = "eza --tree --icons=auto";
         n = "nvim";
-	update = "git add ~/.dotfiles && git commit -m 'update' && sudo nixos-rebuild switch --flake ~/.dotfiles/#midas";
+	update = "sudo nixos-rebuild switch --flake ~/.dotfiles/#midas";
       };
     };
 

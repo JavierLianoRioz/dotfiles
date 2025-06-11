@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { 
-config, 
 pkgs, 
 inputs,
 ... 
@@ -12,16 +11,13 @@ inputs,
 let 
 custom-sddm-astronaut = pkgs.sddm-astronaut.override {
     embeddedTheme = "hyprland_kath";
-    #themeConfig = {
-    #  Background = "path/to/background.jpg";
-    #  Font = "M+1 Nerd Font";
-    #};
   };
 in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.nixvim.nixosModules.nixvim
     ];
 
   # Bootloader.
@@ -108,16 +104,39 @@ services.displayManager.sddm = {
   programs.firefox.enable = true;
   programs.zsh.enable = true;
 
+  # Install nixvim
+   programs.nixvim = {
+    enable = true;
+
+    colorschemes.catppuccin.enable = true;
+    plugins = {
+      lualine.enable = true;
+      lsp = {
+        enable = true;
+        servers = {
+          nixd.enable = true;
+        };
+      };
+    # Renamed from cmp-nvim-lsp to cmp, and moved into the 'cmp' block
+    cmp.enable = true;
+    cmp.autoEnableSources = true;
+    cmp.settings.mapping = {
+      "<cr>" = "cmp.mapping.confirm({ select = true })";
+      # otros mapeos de teclado para nvim-cmp
+    };
+    };
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
 environment.systemPackages = with pkgs;
   [
-    neovim
     kitty
     git
     home-manager
     custom-sddm-astronaut
+    lazygit
   ]
   ++ [
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
