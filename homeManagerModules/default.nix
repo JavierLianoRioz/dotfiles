@@ -4,8 +4,8 @@
   ...
   }: {
   imports = [
-    ./hyprland.nix
-    ./kitty
+    ./hyprland/default.nix
+    ./kitty/default.nix
   ];
 
   hyprland.enable = lib.mkDefault true;

@@ -36,10 +36,19 @@
 
     # ---------- ALIAS ACTUALIZADOS PARA USAR 'eza' ----------
     # Añade los alias a la configuración de Zsh.
-    programs.zsh.enable = true;
-    programs.zsh.shellAliases = {
-      l = "eza -l --icons=auto --git --no-permissions --no-user --no-filesize --no-time";
-      t = "eza --tree --icons=auto";
+    programs.zsh = {
+    	enable = true;
+    	shellAliases = {
+	      l = "eza -l --icons=auto --git --no-permissions --no-user --no-filesize --no-time";
+	      t = "eza --tree --icons=auto";
+	      n = "nvim";
+	      update = "sudo nixos-rebuild switch --flake ~/.dotfiles/#midas";
+	};
     };
+    programs.zoxide = {
+    	enable = true;
+	enableZshIntegration = true;
+    };
+    programs.fzf.enable = true;
   };
 }

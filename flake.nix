@@ -7,13 +7,15 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    stylix = {
-	    url = "github:danth/stylix";
-	    inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.url = "github:hyprwm/hyprland?ref=v0.36.0";
+    rose-pine-hyprcursor = {
+      url = "github:ndom91/rose-pine-hyprcursor";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprlang.follows = "hyprland/hyprlang";
     };
   };
 
-  outputs = { stylix, nixpkgs, home-manager, ... }@inputs: 
+  outputs = { nixpkgs, home-manager, ... }@inputs: 
   let 
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -21,11 +23,10 @@
   {
     nixosConfigurations = {
         "midas" = nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit system; };
+            specialArgs = { inherit system inputs; };
 
             modules = [
-	      stylix.nixosModules.stylix
-	      home-manager.nixosModules.home-manager {
+	     home-manager.nixosModules.home-manager {
                 # Configura Home Manager para el usuario 'midas' (o el nombre de usuario que uses)
                 home-manager.users.midas = {
                   imports = [

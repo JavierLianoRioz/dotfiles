@@ -2,8 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ 
+config, 
+pkgs, 
+inputs,
+... 
+}:
 
+let 
+custom-sddm-astronaut = pkgs.sddm-astronaut.override {
+    embeddedTheme = "hyprland_kath";
+    #themeConfig = {
+    #  Background = "path/to/background.jpg";
+    #  Font = "M+1 Nerd Font";
+    #};
+  };
+in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -41,12 +55,25 @@
   # Enable hyprland
   programs.hyprland.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+services.displayManager.sddm = {
+       enable = true;
+       wayland = {
+         enable = true;
+       };
+       package = pkgs.kdePackages.sddm;
+       extraPackages = with pkgs; [
+         kdePackages.qtsvg
+         kdePackages.qtmultimedia
+         kdePackages.qtvirtualkeyboard
+	 custom-sddm-astronaut
+       ];
+       theme = "sddm-astronaut-theme";
+       settings = {
+		Theme = {
+			Current = "sddm-astronaut-theme";
+		};
+       };
+    };
 
   # Configure keymap
   services.xserver.xkb = {
@@ -84,13 +111,18 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [
-	  neovim
-	  kitty
+environment.systemPackages = with pkgs;
+  [
+    neovim
+    kitty
     git
     home-manager
+    custom-sddm-astronaut
+  ]
+  ++ [
+    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
   ];
-  
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "25.05"; # DON'T CHANGE
