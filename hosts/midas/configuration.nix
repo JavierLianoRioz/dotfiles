@@ -17,7 +17,6 @@ in
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.nixvim.nixosModules.nixvim
     ];
 
   # Bootloader.
@@ -104,29 +103,6 @@ services.displayManager.sddm = {
   programs.firefox.enable = true;
   programs.zsh.enable = true;
 
-  # Install nixvim
-   programs.nixvim = {
-    enable = true;
-
-    colorschemes.catppuccin.enable = true;
-    plugins = {
-      lualine.enable = true;
-      lsp = {
-        enable = true;
-        servers = {
-          nixd.enable = true;
-        };
-      };
-    # Renamed from cmp-nvim-lsp to cmp, and moved into the 'cmp' block
-    cmp.enable = true;
-    cmp.autoEnableSources = true;
-    cmp.settings.mapping = {
-      "<cr>" = "cmp.mapping.confirm({ select = true })";
-      # otros mapeos de teclado para nvim-cmp
-    };
-    };
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -140,6 +116,7 @@ environment.systemPackages = with pkgs;
   ]
   ++ [
     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+    inputs.nixvim.packages.${pkgs.system}.default
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
