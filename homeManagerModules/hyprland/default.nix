@@ -14,11 +14,11 @@
 				input.kb_layout = "es";
 
 				exec-once = [
-					"hyprctl setcursor Dracula-cursors 24"
+					"hyprctl setcursor rose-pine-hyprcursor 24"
 					"sleep 0.1 && swww-daemon && swww img ./Cat.png"
 				];
 
-				env = "HYPRCURSOR_THEME,rose-pine-hyprcursor";
+				# env = "HYPRCURSOR_THEME,rose-pine-hyprcursor";
 
 				"$mod" = "SUPER";
 				"$terminal" = "kitty";
