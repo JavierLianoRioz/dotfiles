@@ -2,22 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ 
-pkgs, 
-inputs,
-... 
+{
+  pkgs,
+  inputs,
+  ...
 }:
 
-let 
-custom-sddm-astronaut = pkgs.sddm-astronaut.override {
+let
+  custom-sddm-astronaut = pkgs.sddm-astronaut.override {
     embeddedTheme = "hyprland_kath";
   };
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -46,36 +46,36 @@ in
     LC_TELEPHONE = "es_ES.UTF-8";
     LC_TIME = "es_ES.UTF-8";
   };
-  
+
   # Enable hyprland
   programs.hyprland.enable = true;
 
-services.displayManager.sddm = {
-       enable = true;
-       wayland = {
-         enable = true;
-       };
-       package = pkgs.kdePackages.sddm;
-       extraPackages = with pkgs; [
-         kdePackages.qtsvg
-         kdePackages.qtmultimedia
-         kdePackages.qtvirtualkeyboard
-	 custom-sddm-astronaut
-       ];
-       theme = "sddm-astronaut-theme";
-       settings = {
-		Theme = {
-			Current = "sddm-astronaut-theme";
-		};
-       };
+  services.displayManager.sddm = {
+    enable = true;
+    wayland = {
+      enable = true;
     };
+    package = pkgs.kdePackages.sddm;
+    extraPackages = with pkgs; [
+      kdePackages.qtsvg
+      kdePackages.qtmultimedia
+      kdePackages.qtvirtualkeyboard
+      custom-sddm-astronaut
+    ];
+    theme = "sddm-astronaut-theme";
+    settings = {
+      Theme = {
+        Current = "sddm-astronaut-theme";
+      };
+    };
+  };
 
   # Configure keymap
   services.xserver.xkb = {
     layout = "es";
     variant = "";
   };
-  
+
   console.keyMap = "es";
 
   # Enable CUPS to print documents.
@@ -95,7 +95,10 @@ services.displayManager.sddm = {
   users.users.midas = {
     isNormalUser = true;
     description = "midas";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     shell = pkgs.zsh;
   };
 
@@ -106,20 +109,24 @@ services.displayManager.sddm = {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-environment.systemPackages = with pkgs;
-  [
-    kitty
-    git
-    home-manager
-    custom-sddm-astronaut
-    lazygit
-  ]
-  ++ [
-    inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
-    inputs.nixvim.packages.${pkgs.system}.default
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+      kitty
+      git
+      home-manager
+      custom-sddm-astronaut
+      lazygit
+    ]
+    ++ [
+      inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
+      inputs.nixvim.packages.${pkgs.system}.default
+    ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   system.stateVersion = "25.05"; # DON'T CHANGE
 
