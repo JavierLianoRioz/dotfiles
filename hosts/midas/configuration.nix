@@ -1,82 +1,64 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
-
+{ pkgs, inputs, ... }:
 let
   custom-sddm-astronaut = pkgs.sddm-astronaut.override {
     embeddedTheme = "hyprland_kath";
   };
 in
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "tower"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "Europe/Madrid";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "es_ES.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "es_ES.UTF-8";
-    LC_IDENTIFICATION = "es_ES.UTF-8";
-    LC_MEASUREMENT = "es_ES.UTF-8";
-    LC_MONETARY = "es_ES.UTF-8";
-    LC_NAME = "es_ES.UTF-8";
-    LC_NUMERIC = "es_ES.UTF-8";
-    LC_PAPER = "es_ES.UTF-8";
-    LC_TELEPHONE = "es_ES.UTF-8";
-    LC_TIME = "es_ES.UTF-8";
+  # Bootloader
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
   };
 
+  # Red
+  networking = {
+    hostName = "tower";
+    networkmanager.enable = true;
+  };
+
+  # Localización
+  time.timeZone = "Europe/Madrid";
+  i18n = {
+    defaultLocale = "es_ES.UTF-8";
+    extraLocaleSettings = {
+      LC_ADDRESS = "es_ES.UTF-8";
+      LC_IDENTIFICATION = "es_ES.UTF-8";
+      LC_MEASUREMENT = "es_ES.UTF-8";
+      LC_MONETARY = "es_ES.UTF-8";
+      LC_NAME = "es_ES.UTF-8";
+      LC_NUMERIC = "es_ES.UTF-8";
+      LC_PAPER = "es_ES.UTF-8";
+      LC_TELEPHONE = "es_ES.UTF-8";
+      LC_TIME = "es_ES.UTF-8";
+    };
+  };
+
+  # Servicios
   services = {
-    # Enable hyprland
+    # Display manager SDDM con tema personalizado
     displayManager.sddm = {
       enable = true;
-      wayland = {
-        enable = true;
-      };
+      wayland.enable = true;
       package = pkgs.kdePackages.sddm;
+      theme = "sddm-astronaut-theme";
       extraPackages = with pkgs; [
         kdePackages.qtsvg
         kdePackages.qtmultimedia
         kdePackages.qtvirtualkeyboard
         custom-sddm-astronaut
       ];
-      theme = "sddm-astronaut-theme";
-      settings = {
-        Theme = {
-          Current = "sddm-astronaut-theme";
-        };
-      };
+      settings.Theme.Current = "sddm-astronaut-theme";
     };
 
-    # Configure keymap
-    xserver.xkb = {
-      layout = "es";
-      variant = "";
-    };
-
+    # Teclado español
+    xserver.xkb.layout = "es";
     console.keyMap = "es";
 
-    # Enable CUPS to print documents.
+    # Impresión y audio
     printing.enable = true;
-
-    # Enable sound with pipewire.
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -85,9 +67,10 @@ in
       pulse.enable = true;
     };
   };
+
   security.rtkit.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Usuario
   users.users.midas = {
     isNormalUser = true;
     description = "midas";
@@ -98,14 +81,14 @@ in
     shell = pkgs.zsh;
   };
 
-  # Install firefox.
+  # Programas
   programs = {
     firefox.enable = true;
     zsh.enable = true;
     hyprland.enable = true;
   };
 
-  # Allow unfree packages
+  # Configuración de paquetes
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages =
@@ -122,11 +105,11 @@ in
       inputs.nixvim.packages.${pkgs.system}.default
     ];
 
+  # Características experimentales de Nix
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
 
-  system.stateVersion = "25.05"; # DON'T CHANGE
-
+  system.stateVersion = "25.05"; # NO CAMBIAR
 }
