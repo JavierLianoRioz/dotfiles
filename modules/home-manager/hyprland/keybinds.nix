@@ -10,4 +10,5 @@
   "$mod, C, exec, code"
   "$mod, V, exec, pavucontrol"
   "$mod, B, exec, firefox"
+  "$mod, D, exec, dolphin"
 ]
