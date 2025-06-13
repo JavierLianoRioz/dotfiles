@@ -55,7 +55,6 @@ in
 
     # Teclado español
     xserver.xkb.layout = "es";
-    console.keyMap = "es";
 
     # Impresión y audio
     printing.enable = true;
@@ -67,6 +66,7 @@ in
       pulse.enable = true;
     };
   };
+  console.keyMap = "es";
 
   security.rtkit.enable = true;
 
