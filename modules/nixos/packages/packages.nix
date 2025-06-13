@@ -11,6 +11,8 @@
       git
       home-manager
       lazygit
+      vscode
+      pavucontrol
     ]
     ++ [
       inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
