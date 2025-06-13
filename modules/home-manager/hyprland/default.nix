@@ -30,10 +30,10 @@
         "$buscador" = "firefox";
 
         bind = import ./keybinds.nix;
-        bindm = [ 
+        bindm = [
           "ALT, mouse:272, movewindow"
-                  "ALT, mouse:273, resizewindow"
-                   ];
+          "ALT, mouse:273, resizewindow"
+        ];
         bindc = [ "ALT, mouse:272, togglefloating" ];
 
         binds.drag_threshold = 10;
