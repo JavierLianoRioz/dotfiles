@@ -13,6 +13,8 @@
       lazygit
       vscode
       pavucontrol
+      kdePackages.dolphin
+      p7zip
     ]
     ++ [
       inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
