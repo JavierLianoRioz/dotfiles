@@ -27,21 +27,17 @@
             specialArgs = { inherit system inputs; };
 
             modules = [
-	     home-manager.nixosModules.home-manager {
-                # Configura Home Manager para el usuario 'midas' (o el nombre de usuario que uses)
+              home-manager.nixosModules.home-manager
+              ./hosts/midas/configuration.nix
+              ./modules/nixos
+              {
                 home-manager.users.midas = {
                   imports = [
-                    # Tus módulos de Home Manager ahora van aquí
                     ./hosts/midas/home.nix
-                    ./homeManagerModules
+                    ./modules/home-manager
                   ];
-                  # Si necesitas opciones adicionales para Home Manager (no para tus módulos)
-                  # por ejemplo, para activar la integración con nixos, aunque esto suele ser por defecto
-                  # stateVersion = "23.11"; # Ajusta esto a tu versión de NixOS
                 };
               }
-              ./hosts/midas/configuration.nix
-              ./nixosModules
             ];
           };
       };
